@@ -11,7 +11,7 @@ class leadModel extends Model
     protected $table = 'leads';
     protected $primaryKey = 'id_leads';
 
-    protected $fillable = ['name', 'email', 'phone', 'address', 'status', 'created_by'];
+    protected $fillable = ['name', 'email', 'phone', 'address', 'created_by'];
 
     public function user()
     {

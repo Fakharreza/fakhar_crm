@@ -25,7 +25,6 @@
                     <tr>
                         <th class="px-6 py-3 text-left font-medium">Nama</th>
                         <th class="px-6 py-3 text-left font-medium">Email</th>
-                        <th class="px-6 py-3 text-left font-medium">Status</th>
                         <th class="px-6 py-3 text-left font-medium">Aksi</th>
                     </tr>
                 </thead>
@@ -34,7 +33,6 @@
                         <tr class="hover:bg-gray-50">
                             <td class="px-6 py-4 text-gray-800">{{ $lead->name }}</td>
                             <td class="px-6 py-4 text-gray-700">{{ $lead->email }}</td>
-                            <td class="px-6 py-4 capitalize text-gray-600">{{ $lead->status }}</td>
                             <td class="px-6 py-4 space-x-2">
                                 <a href="{{ route('leads.edit', $lead->id_leads) }}" class="text-indigo-600 hover:underline">Edit</a>
                                 <form action="{{ route('leads.destroy', $lead->id_leads) }}" method="POST" class="inline-block">
