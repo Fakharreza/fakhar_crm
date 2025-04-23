@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\customerController;
 use App\Http\Controllers\productController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\leadController;
@@ -83,6 +84,12 @@ Route::middleware('auth')->group(function () {
         Route::get('/{id}/edit', [projectController::class, 'edit'])->name('projects.edit');
         Route::put('/{id}', [projectController::class, 'update'])->name('projects.update'); 
         Route::delete('/{id}', [projectController::class, 'destroy'])->name('projects.destroy');
+        Route::put('/{id}/approve', [projectController::class, 'approve'])->name('projects.approve');
+    });
+
+    Route::group(['prefix' =>'customers' ],function(){
+        Route::get('/', [customerController::class, 'index'])->name('customers.index');
+        Route::delete('/{id}', [customerController::class, 'destroy'])->name('customers.destroy');
     });
     
 

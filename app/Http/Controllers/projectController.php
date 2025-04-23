@@ -31,8 +31,10 @@ class projectController extends Controller
             'id_leads' => 'required|exists:leads,id_leads',
             'id_sales' => 'required|exists:users,id_users',
             'id_manager' => 'required|exists:users,id_users',
-            'status' => 'in:pending,approved,rejected'
         ]);
+
+        // status tidak diinput, jadi defaultnya 'pending'
+        $request->merge(['status' => 'pending']);
 
         projectModel::create($request->all());
 
@@ -55,11 +57,20 @@ class projectController extends Controller
             'id_leads' => 'required|exists:leads,id_leads',
             'id_sales' => 'required|exists:users,id_users',
             'id_manager' => 'required|exists:users,id_users',
-            'status' => 'in:pending,approved,rejected'
+            'status' => 'required|in:pending,approved,rejected',
         ]);
 
         $project = projectModel::findOrFail($id);
+        $wasApproved = $project->status === 'approved'; // status sebelumnya
         $project->update($request->all());
+
+        // jika status baru adalah approved dan sebelumnya belum approved → buat customer
+        if ($request->status === 'approved' && !$wasApproved) {
+            customerModel::create([
+                'id_leads' => $project->id_leads,
+                'start_date' => now()
+            ]);
+        }
 
         return redirect()->route('projects.index')->with('success', 'Project berhasil diperbarui.');
     }
@@ -68,18 +79,5 @@ class projectController extends Controller
     {
         projectModel::destroy($id);
         return redirect()->route('projects.index')->with('success', 'Project dihapus.');
-    }
-
-    public function approve($id)
-    {
-        $project = projectModel::findOrFail($id);
-        $project->update(['status' => 'approved']);
-
-        customerModel::create([
-            'id_leads' => $project->id_leads,
-            'start_date' => now()
-        ]);
-
-        return redirect()->route('projects.index')->with('success', 'Project disetujui & pelanggan ditambahkan.');
     }
 }
