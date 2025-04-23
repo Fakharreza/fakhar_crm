@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\leadController;
+use App\Http\Controllers\usersController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -41,6 +42,15 @@ Route::middleware('auth')->group(function () {
         Route::get('/{id}/edit', [leadController::class, 'edit'])->name('leads.edit');
         Route::put('/{id}', [leadController::class, 'update'])->name('leads.update'); 
         Route::delete('/{id}', [leadController::class, 'destroy'])->name('leads.destroy');
+    });
+
+    Route::group(['prefix' =>'users' ],function(){
+        Route::get('/', [usersController::class, 'index'])->name('users.index');
+        Route::get('/create', [usersController::class, 'create'])->name('users.create');
+        Route::post('/', [usersController::class, 'store'])->name('users.store'); 
+        Route::get('/{id}/edit', [usersController::class, 'edit'])->name('users.edit');
+        Route::put('/{id}', [usersController::class, 'update'])->name('users.update'); 
+        Route::delete('/{id}', [usersController::class, 'destroy'])->name('users.destroy');
     });
     
 

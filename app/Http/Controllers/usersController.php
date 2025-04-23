@@ -49,9 +49,9 @@ class usersController extends Controller
 
         $request->validate([
             'name' => 'required',
-            'email' => 'required|email|unique:users,email,' . $id,
+            'email' => 'required|email|unique:users,email,' . $id . ',id_users',
             'role' => 'required|in:sales,manager'
-        ]);
+        ]); 
 
         $user->update($request->only(['name', 'email', 'role']));
 

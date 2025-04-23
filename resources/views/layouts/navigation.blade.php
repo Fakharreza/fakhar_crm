@@ -16,6 +16,10 @@
                         {{ __('Dashboard') }}
                     </x-nav-link>
 
+                    <x-nav-link :href="route('users.index')" :active="request()->routeIs('users.index')">
+                        {{ __('Users') }}
+                    </x-nav-link>
+
                     <x-nav-link :href="route('leads.index')" :active="request()->routeIs('leads.index')">
                         {{ __('Leads') }}
                     </x-nav-link>
