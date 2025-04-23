@@ -3,6 +3,7 @@
 use App\Http\Controllers\productController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\leadController;
+use App\Http\Controllers\projectController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\usersController;
 use Illuminate\Support\Facades\Route;
@@ -71,10 +72,17 @@ Route::middleware('auth')->group(function () {
         Route::get('/{id}/edit', [TransactionController::class, 'edit'])->name('transactions.edit');
         Route::put('/{id}', [TransactionController::class, 'update'])->name('transactions.update'); 
         Route::delete('/{id}', [TransactionController::class, 'destroy'])->name('transactions.destroy');
-        Route::put('/transactions/{id}/mark-as-paid', [TransactionController::class, 'markAsPaid'])->name('transactions.markAsPaid');
-        Route::put('/transactions/{id}/mark-as-unpaid', [TransactionController::class, 'markAsUnpaid'])->name('transactions.markAsUnpaid');
         Route::get('/transactions/{transaction}', [TransactionController::class, 'show'])->name('transactions.show');
 
+    });
+
+    Route::group(['prefix' =>'projects' ],function(){
+        Route::get('/', [projectController::class, 'index'])->name('projects.index');
+        Route::get('/create', [projectController::class, 'create'])->name('projects.create');
+        Route::post('/', [projectController::class, 'store'])->name('projects.store'); 
+        Route::get('/{id}/edit', [projectController::class, 'edit'])->name('projects.edit');
+        Route::put('/{id}', [projectController::class, 'update'])->name('projects.update'); 
+        Route::delete('/{id}', [projectController::class, 'destroy'])->name('projects.destroy');
     });
     
 
