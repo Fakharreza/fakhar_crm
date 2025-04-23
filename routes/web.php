@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\productController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\leadController;
 use App\Http\Controllers\usersController;
@@ -51,6 +52,15 @@ Route::middleware('auth')->group(function () {
         Route::get('/{id}/edit', [usersController::class, 'edit'])->name('users.edit');
         Route::put('/{id}', [usersController::class, 'update'])->name('users.update'); 
         Route::delete('/{id}', [usersController::class, 'destroy'])->name('users.destroy');
+    });
+
+    Route::group(['prefix' =>'products' ],function(){
+        Route::get('/', [productController::class, 'index'])->name('products.index');
+        Route::get('/create', [productController::class, 'create'])->name('products.create');
+        Route::post('/', [productController::class, 'store'])->name('products.store'); 
+        Route::get('/{id}/edit', [productController::class, 'edit'])->name('products.edit');
+        Route::put('/{id}', [productController::class, 'update'])->name('products.update'); 
+        Route::delete('/{id}', [productController::class, 'destroy'])->name('products.destroy');
     });
     
 
