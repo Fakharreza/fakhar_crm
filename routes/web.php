@@ -3,6 +3,7 @@
 use App\Http\Controllers\productController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\leadController;
+use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\usersController;
 use Illuminate\Support\Facades\Route;
 
@@ -61,6 +62,19 @@ Route::middleware('auth')->group(function () {
         Route::get('/{id}/edit', [productController::class, 'edit'])->name('products.edit');
         Route::put('/{id}', [productController::class, 'update'])->name('products.update'); 
         Route::delete('/{id}', [productController::class, 'destroy'])->name('products.destroy');
+    });
+    
+    Route::group(['prefix' =>'transactions' ],function(){
+        Route::get('/', [TransactionController::class, 'index'])->name('transactions.index');
+        Route::get('/create', [TransactionController::class, 'create'])->name('transactions.create');
+        Route::post('/', [TransactionController::class, 'store'])->name('transactions.store'); 
+        Route::get('/{id}/edit', [TransactionController::class, 'edit'])->name('transactions.edit');
+        Route::put('/{id}', [TransactionController::class, 'update'])->name('transactions.update'); 
+        Route::delete('/{id}', [TransactionController::class, 'destroy'])->name('transactions.destroy');
+        Route::put('/transactions/{id}/mark-as-paid', [TransactionController::class, 'markAsPaid'])->name('transactions.markAsPaid');
+        Route::put('/transactions/{id}/mark-as-unpaid', [TransactionController::class, 'markAsUnpaid'])->name('transactions.markAsUnpaid');
+        Route::get('/transactions/{transaction}', [TransactionController::class, 'show'])->name('transactions.show');
+
     });
     
 
