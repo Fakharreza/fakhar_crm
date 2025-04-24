@@ -1,49 +1,50 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="text-xl font-semibold text-gray-800 leading-tight">
-            {{ __('Manajemen User') }}
-        </h2>
+        <h2 class="text-xl font-semibold text-gray-800 leading-tight">Daftar User</h2>
     </x-slot>
 
-    <div class="py-8 px-4 max-w-7xl mx-auto">
-        <div class="flex justify-between items-center mb-6">
-            <h1 class="text-2xl font-bold text-gray-700">Daftar User</h1>
-            <a href="{{ route('users.create') }}" class="bg-amber-400 hover:bg-amber-500 text-white px-5 py-2.5 rounded-md shadow-sm transition">
-                + Tambah User
+    <div class="max-w-6xl mx-auto py-10 px-6">
+        <div class="flex justify-end mb-4">
+            <a href="{{ route('users.create') }}" class="px-5 py-2 bg-[#f3e8d8] hover:bg-[#e9ddcb] text-gray-800 rounded-md shadow-sm border border-gray-300 transition">
+                ➕ Tambah User
             </a>
         </div>
 
         @if(session('success'))
-            <div class="bg-emerald-50 text-emerald-800 px-4 py-3 rounded-md border border-emerald-100 mb-4 shadow-sm">
+            <div class="mb-4 px-4 py-3 bg-green-50 text-green-800 border border-green-100 rounded-md shadow-sm">
                 {{ session('success') }}
             </div>
         @endif
 
-        <div class="bg-[#fdfcf9] shadow-sm rounded-lg overflow-x-auto">
-            <table class="min-w-full divide-y divide-gray-200">
-                <thead class="bg-[#f6f4ef]">
+        <div class="bg-[#fdfcf9] rounded-lg shadow border border-gray-300 overflow-hidden">
+            <table class="min-w-full">
+                <thead class="bg-[#f7f5f0] text-gray-700 text-sm">
                     <tr>
-                        <th class="text-left text-sm font-medium text-gray-600 px-6 py-3">Nama</th>
-                        <th class="text-left text-sm font-medium text-gray-600 px-6 py-3">Email</th>
-                        <th class="text-left text-sm font-medium text-gray-600 px-6 py-3">Role</th>
-                        <th class="text-left text-sm font-medium text-gray-600 px-6 py-3">Aksi</th>
+                        <th class="px-4 py-3 border">Nama</th>
+                        <th class="px-4 py-3 border">Email</th>
+                        <th class="px-4 py-3 border">Role</th>
+                        <th class="px-4 py-3 border">Aksi</th>
                     </tr>
                 </thead>
-                <tbody class="bg-white divide-y divide-gray-100">
-                    @foreach($users as $user)
-                        <tr class="hover:bg-[#faf9f6] transition">
-                            <td class="px-6 py-4 text-gray-800">{{ $user->name }}</td>
-                            <td class="px-6 py-4 text-gray-800">{{ $user->email }}</td>
-                            <td class="px-6 py-4 capitalize text-gray-700">{{ $user->role }}</td>
-                            <td class="px-6 py-4 space-x-2">
-                                <a href="{{ route('users.edit', $user->id_users) }}" class="text-amber-600 hover:underline">Edit</a>
-                                <form action="{{ route('users.destroy', $user->id_users) }}" method="POST" class="inline">
+                <tbody>
+                    @forelse($users as $user)
+                        <tr class="hover:bg-gray-50 transition">
+                            <td class="px-4 py-3 border text-gray-800">{{ $user->name }}</td>
+                            <td class="px-4 py-3 border text-gray-800">{{ $user->email }}</td>
+                            <td class="px-4 py-3 border capitalize text-gray-700">{{ $user->role }}</td>
+                            <td class="px-4 py-3 border space-x-2">
+                                <a href="{{ route('users.edit', $user->id_users) }}" class="text-yellow-600 hover:underline">Edit</a>
+                                <form action="{{ route('users.destroy', $user->id_users) }}" method="POST" class="inline" onsubmit="return confirm('Yakin ingin menghapus user ini?')">
                                     @csrf @method('DELETE')
-                                    <button onclick="return confirm('Yakin ingin menghapus user ini?')" class="text-rose-600 hover:underline">Hapus</button>
+                                    <button class="text-red-600 hover:underline">Hapus</button>
                                 </form>
                             </td>
                         </tr>
-                    @endforeach
+                    @empty
+                        <tr>
+                            <td colspan="4" class="px-4 py-4 text-center text-gray-500">Tidak ada data</td>
+                        </tr>
+                    @endforelse
                 </tbody>
             </table>
         </div>

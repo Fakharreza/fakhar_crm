@@ -17,42 +17,48 @@
             </a>
         </div>
 
-        <div class="bg-[#fdfcf9] rounded-lg shadow border border-gray-300 overflow-hidden">
-            <table class="min-w-full">
-                <thead>
-                    <tr class="bg-[#f7f5f0] text-gray-700 text-sm">
-                        <th class="px-6 py-3 text-left font-medium">Pelanggan</th>
-                        <th class="px-6 py-3 text-left font-medium">Total</th>
+        <div class="bg-[#fdfcf9] rounded-lg shadow border border-gray-300 overflow-x-auto">
+            <table class="min-w-full text-sm text-left text-gray-800">
+                <thead class="bg-[#f7f5f0] text-gray-700">
+                    <tr>
+                        <th class="px-6 py-3 font-medium">Pelanggan</th>
+                        <th class="px-6 py-3 font-medium">Total</th>
                         <th class="px-6 py-3 text-center font-medium">Tindakan</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-gray-200">
-                @foreach($transactions as $transaction)
-    <tr class="hover:bg-[#f9f7f4] transition">
-        <td class="px-6 py-4 text-sm text-gray-800">
-            @if($transaction->customer && $transaction->customer->lead)
-                {{ $transaction->customer->lead->name }} <!-- Nama yang diambil dari leads -->
-            @else
-                Tidak ada nama
-            @endif
-        </td>
-        <td class="px-6 py-4 text-sm text-gray-800">Rp{{ number_format($transaction->total_amount, 2, ',', '.') }}</td>
-        <td class="px-6 py-4 text-center space-x-2">
-            <a href="{{ route('transactions.show', $transaction->id_transactions) }}" class="text-blue-500 hover:underline">Lihat</a>
+                    @foreach($transactions as $transaction)
+                        <tr class="hover:bg-[#f9f7f4] transition">
+                            <td class="px-6 py-4">
+                                @if($transaction->customer && $transaction->customer->lead)
+                                    {{ $transaction->customer->lead->name }}
+                                @else
+                                    Tidak ada nama
+                                @endif
+                            </td>
+                            <td class="px-6 py-4">
+                                Rp{{ number_format($transaction->total_amount, 2, ',', '.') }}
+                            </td>
+                            <td class="px-6 py-4 text-center space-x-2">
+                                <a href="{{ route('transactions.show', $transaction->id_transactions) }}"
+                                   class="text-blue-500 hover:underline">Lihat</a>
 
-            <a href="{{ route('transactions.edit', $transaction->id_transactions) }}"
-               class="text-blue-600 hover:text-blue-800 transition">Edit</a>
-            <form action="{{ route('transactions.destroy', $transaction->id_transactions) }}" method="POST" class="inline">
-                @csrf
-                @method('DELETE')
-                <button type="submit"
-                    onclick="return confirm('Yakin ingin menghapus transaksi ini?')"
-                    class="text-red-600 hover:text-red-800 transition">Hapus</button>
-            </form>
-        </td>
-    </tr>
-@endforeach
+                                <a href="{{ route('transactions.edit', $transaction->id_transactions) }}"
+                                   class="text-blue-600 hover:text-blue-800 transition">Edit</a>
 
+                                <form action="{{ route('transactions.destroy', $transaction->id_transactions) }}"
+                                      method="POST" class="inline">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit"
+                                            onclick="return confirm('Yakin ingin menghapus transaksi ini?')"
+                                            class="text-red-600 hover:text-red-800 transition">
+                                        Hapus
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                    @endforeach
                 </tbody>
             </table>
         </div>
