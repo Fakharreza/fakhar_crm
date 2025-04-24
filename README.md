@@ -5,6 +5,8 @@
 
 <p>Link Draw.io dari google drive (https://drive.google.com/drive/folders/14Gft5Q271cbbwUR5h8Lq8EqIZIpZN4h9?usp=sharing) </p>
 
+Untuk File Query Database.sql sudah saya upload dalam bentuk file didalam repository ini
+
 # 23-04-2025
 ## Pembuatan Projek Aplikasi
 
